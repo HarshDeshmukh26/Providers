@@ -1,0 +1,6 @@
+**/bin/
+**/vendor/
+**/node_modules/
+.env
+.env.local
+*.log
