@@ -34,6 +34,24 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/root/go/pkg/mod \
     bash /source/scripts/test.sh
 
+FROM base AS encryption-build
+ARG TARGETOS
+ARG TARGETARCH
+COPY encryption/ /source/encryption/
+COPY scripts/package-encryption.sh /source/scripts/package-encryption.sh
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/root/go/pkg/mod \
+    CGO_ENABLED=0 GOTOOLCHAIN=local GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
+    bash /source/scripts/package-encryption.sh
+
+FROM base AS encryption-tests
+ENV CGO_ENABLED=0
+COPY encryption/ /source/encryption/
+COPY scripts/test-encryption.sh /source/scripts/test-encryption.sh
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/root/go/pkg/mod \
+    bash /source/scripts/test-encryption.sh
+
 FROM scratch AS providers
 ARG BUILD_REVISION=uncommitted
 LABEL org.opencontainers.image.source="https://github.com/HarshDeshmukh26/Providers" \
@@ -53,3 +71,13 @@ LABEL org.opencontainers.image.source="https://github.com/HarshDeshmukh26/Provid
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 WORKDIR /obot-providers/enterprise-providers
 COPY --from=enterprise-build /package/ /
+
+FROM scratch AS encryption-bins
+ARG BUILD_REVISION=uncommitted
+LABEL org.opencontainers.image.source="https://github.com/HarshDeshmukh26/Providers" \
+      org.opencontainers.image.revision=${BUILD_REVISION} \
+      org.opencontainers.image.licenses="Apache-2.0 AND MIT" \
+      org.opencontainers.image.title="FragAI encryption providers"
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+WORKDIR /obot-providers
+COPY --from=encryption-build /package/ /

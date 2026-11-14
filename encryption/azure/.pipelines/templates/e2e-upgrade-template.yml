@@ -1,0 +1,134 @@
+parameters:
+  - name: serviceConnection
+    type: string
+
+jobs:
+  - job: e2e_upgrade_tests
+    timeoutInMinutes: 10
+    cancelTimeoutInMinutes: 5
+    workspace:
+      clean: all
+    variables:
+      - name: REGISTRY_NAME
+        value: kind-registry
+      - name: REGISTRY_PORT
+        value: 5000
+      - name: KUBERNETES_VERSION
+        value: v1.23.5
+      - name: KIND_CLUSTER_NAME
+        value: kms
+      - name: KIND_NETWORK
+        value: kind
+      # contains the following environment variables:
+      # - AZURE_TENANT_ID
+      # - KEYVAULT_NAME
+      # - KEY_NAME
+      # - KEY_VERSION
+      - group: kubernetes-kms
+
+    steps:
+      - task: GoTool@0
+        inputs:
+          version: 1.26.5
+      - template: prepare-deps.yaml
+
+      - script: make e2e-install-prerequisites
+        displayName: "Install e2e test prerequisites"
+
+      - template: az-login.yaml
+        parameters:
+          serviceConnection: ${{ parameters.serviceConnection }}
+
+      - script: |
+          . scripts/setup-local-registry.sh
+        displayName: "Setup local registry"
+        env:
+          REGISTRY_NAME: $(REGISTRY_NAME)
+          REGISTRY_PORT: $(REGISTRY_PORT)
+
+      - script: |
+          version=$(git tag -l --sort=v:refname | tail -n 1)
+          echo "##vso[task.setvariable variable=LATEST_KMS_VERSION]$version"
+
+          echo "Latest released kms version - $version"
+        displayName: "Get latest released version"
+      
+      - template: manifest-template.yml
+        parameters:
+          registry: mcr.microsoft.com/oss/v2/azure/kms
+          imageName: keyvault
+          imageVersion: $(LATEST_KMS_VERSION)
+
+      - script: ./scripts/mock-imds.sh up kind
+        displayName: "Start mock IMDS (WIF)"
+        env:
+          KIND_NETWORK: $(KIND_NETWORK)
+
+      - script: |
+          . scripts/setup-kind-cluster.sh &
+          . scripts/connect-registry.sh &
+          wait
+        displayName: "Setup kind cluster with azure kms plugin"
+        env:
+          REGISTRY_NAME: $(REGISTRY_NAME)
+          REGISTRY_PORT: $(REGISTRY_PORT)
+          KUBERNETES_VERSION: $(KUBERNETES_VERSION)
+          KIND_CLUSTER_NAME: $(KIND_CLUSTER_NAME)
+          KIND_NETWORK: $(KIND_NETWORK)
+
+      - script: |
+          if ! kubectl wait pod -n kube-system -l component=azure-kms-provider --for=condition=Ready --timeout=300s; then
+            echo "=== mock-imds.log ==="; cat tests/e2e/generated_manifests/mock-imds.log 2>/dev/null || echo "(no mock-imds.log; watcher may not have run)"
+            echo "=== node nat OUTPUT ==="; docker exec kms-control-plane iptables -t nat -L OUTPUT -n -v 2>/dev/null || echo "(no node)"
+            echo "=== kms pod ==="; kubectl describe pod -n kube-system -l component=azure-kms-provider 2>/dev/null || true
+            exit 1
+          fi
+        displayName: "Wait for KMS pod readiness"
+
+      - template: cluster-health-template.yml
+      - template: kind-debug-template.yml
+
+      - script: make e2e-test
+        displayName: "Run e2e tests"
+
+      - script: |
+          echo "##vso[task.setvariable variable=LOCAL_IMAGE_VERSION]$(git rev-parse --short HEAD)"
+        displayName: "Update Image version"
+      
+      # This stage will upgrade kms plugin. The path (./tests/e2e/generated_manifests) is mounted in kind cluster.
+      # Any changes in the host will automatically be reflected in /etc/kubernetes/manifests mount path and that static pod is restarted with new changes.
+      # manifest-template updates these files with registry, imageName and version to desired upgrade values.
+      - template: manifest-template.yml
+        parameters:
+          registry: localhost:$(REGISTRY_PORT)
+          imageName: keyvault
+          imageVersion: e2e-$(LOCAL_IMAGE_VERSION)
+
+      - script: |
+          # wait for the kind network to exist
+          echo "waiting for upgraded kms pod to be Running"
+          for i in $(seq 1 25); do
+            image=$(kubectl get pods -n kube-system azure-kms-provider-kms-control-plane -o jsonpath="{.spec.containers[*].image}")
+            phase=$(kubectl get pods -n kube-system azure-kms-provider-kms-control-plane -o jsonpath="{.status.phase}")
+            echo "image - $image phase - $phase"
+            if [ "${image}" == "${REGISTRY}/${IMAGE_NAME}:e2e-${LOCAL_IMAGE_VERSION}" ] && [ "${phase}" == "Running" ]; then
+              break
+            else
+              sleep 5
+            fi
+          done
+          # Give additional 5s for plugin to start. Remove this once https://github.com/Azure/kubernetes-kms/issues/113 is fixed.
+          sleep 5
+        displayName: "Wait for kms upgrade"
+      
+      - template: cluster-health-template.yml
+      - template: kind-debug-template.yml
+
+      - script: make e2e-test
+        displayName: "Run e2e tests"
+
+      - script: ./scripts/mock-imds.sh down
+        displayName: "Stop mock IMDS"
+        condition: always()
+
+      - template: cleanup-template.yml
