@@ -1,0 +1,6 @@
+{
+    "cloud": "AzurePublicCloud",
+    "tenantId": "$AZURE_TENANT_ID",
+    "useManagedIdentityExtension": true
+}
+

@@ -3,7 +3,7 @@ name: FragAI provider images
 on:
   pull_request:
   push:
-    branches: [main, fragai/provider-source-migration]
+    branches: [main, fragai/provider-source-migration, fragai/encryption-source-migration]
     tags: ['v*']
   workflow_dispatch:
 
@@ -28,8 +28,11 @@ jobs:
           cache-dependency-path: |
             community/*/go.sum
             enterprise/*/go.sum
+            encryption/*/go.sum
       - name: Run provider unit tests
         run: bash scripts/test.sh
+      - name: Run encryption provider unit and mock integration tests
+        run: bash scripts/test-encryption.sh
 
   build:
     needs: test
@@ -46,6 +49,8 @@ jobs:
             image: fragai-providers
           - target: enterprise-providers
             image: fragai-enterprise-providers
+          - target: encryption-bins
+            image: fragai-encryption-bins
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
