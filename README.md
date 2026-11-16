@@ -67,6 +67,29 @@ published and accessible. Existing application defaults remain in place until
 their migration gates have passed. Production should
 record the tested image digests as well as the version tags.
 
+## STDIO runtime package
+
+The Phase 4.1 STDIO wrapper is maintained under `runtime/stdio-wrapper` in this
+repository. Its independent build preserves the original MMMCP v0.1.2 source,
+Node/NPX and Python/UVX tooling, and 60 locked system packages per architecture.
+The component README documents local builds, provenance and compatibility
+checks. Auth/model/encryption implementations and existing release tags are
+unchanged by this addition.
+
+The separate `runtime-stdio.yml` workflow runs source tests and baseline
+comparisons on AMD64 and ARM64. An explicit
+`fragai-stdio-v0.26.0-fragai.4-rc.1` tag publishes
+`ghcr.io/harshdeshmukh26/fragai-stdio-wrapper:v0.26.0-fragai.4-rc.1`
+using this repository's scoped package token. The tag must match the component
+source lock. The existing `v*` provider-release workflow is unchanged.
+
+The registry owner stays `harshdeshmukh26`; `Providers` is the source repository
+associated with the package. After publication, verify public visibility and
+anonymous pulls before any application-default change.
+
+The [v0.26.0-fragai.4-rc.1 release record](runtime/stdio-wrapper/releases/v0.26.0-fragai.4-rc.1.md)
+contains the published digest, source commit and passing public-pull checks.
+
 ## Remaining dependencies
 
 This stage establishes owned provider source and packaging. It does not yet

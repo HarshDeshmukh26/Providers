@@ -1,1 +1,5 @@
 * text=auto eol=lf
+# Retain the byte-exact STDIO upstream snapshots and portable fixture scripts.
+runtime/stdio-wrapper/source/** -text
+runtime/stdio-wrapper/packages/** text eol=lf
+runtime/stdio-wrapper/tests/** text eol=lf
