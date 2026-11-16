@@ -1,0 +1,8 @@
+{
+  "name": "fragai-stdio-fixture",
+  "version": "0.0.1",
+  "private": true,
+  "bin": {
+    "fragai-fixture": "server.cjs"
+  }
+}

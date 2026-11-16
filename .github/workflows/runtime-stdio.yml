@@ -1,0 +1,178 @@
+name: FragAI STDIO wrapper
+
+on:
+  push:
+    tags: ["fragai-stdio-v*"]
+  pull_request:
+    branches: [main]
+    paths:
+      - runtime/stdio-wrapper/**
+      - tools/verify-stdio-*.mjs
+      - .github/workflows/runtime-stdio.yml
+      - .gitattributes
+      - .gitignore
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the tested candidate tag from the source lock
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-stdio-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.15.0"
+      - name: Verify release tag matches the source lock
+        if: github.event_name == 'push'
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node --input-type=module -e '
+            import assert from "node:assert/strict";
+            import fs from "node:fs";
+            const lock=JSON.parse(fs.readFileSync("runtime/stdio-wrapper/sources.lock.json"));
+            assert.equal(process.env.RELEASE_TAG,`fragai-stdio-${lock.candidateImage.split(":").at(-1)}`);
+          '
+      - run: node tools/verify-stdio-sources.mjs --require-tracked
+      - run: docker build --target source-tests runtime/stdio-wrapper
+
+  compatibility:
+    needs: source
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.15.0"
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Build selected architecture
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: runtime/stdio-wrapper
+          platforms: linux/${{ matrix.arch }}
+          load: true
+          push: false
+          tags: fragai-stdio-wrapper:test-${{ matrix.arch }}
+          labels: org.opencontainers.image.revision=${{ github.sha }}
+      - name: Pull retained baseline
+        env:
+          PLATFORM: linux/${{ matrix.arch }}
+        run: |
+          baseline=$(node -p "JSON.parse(require('fs').readFileSync('runtime/stdio-wrapper/sources.lock.json')).baselineImage")
+          docker pull --platform "$PLATFORM" "$baseline"
+      - name: Compare contract and exercise NPX and UVX
+        env:
+          PLATFORM: linux/${{ matrix.arch }}
+        run: node tools/verify-stdio-wrapper.mjs --image "fragai-stdio-wrapper:test-${PLATFORM#linux/}" --platform "$PLATFORM"
+      - name: Export the tested image for publication
+        if: startsWith(github.ref, 'refs/tags/fragai-stdio-v') || (github.event_name == 'workflow_dispatch' && inputs.publish)
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: docker save --output "bin/independence/stdio-$ARCH.tar" "fragai-stdio-wrapper:test-$ARCH"
+      - name: Retain the exact tested image
+        if: startsWith(github.ref, 'refs/tags/fragai-stdio-v') || (github.event_name == 'workflow_dispatch' && inputs.publish)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: stdio-image-${{ matrix.arch }}
+          path: |
+            bin/independence/stdio-*.tar
+            bin/independence/phase-4-stdio-*.json
+          retention-days: 7
+          compression-level: 0
+      - name: Retain compatibility report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: stdio-compatibility-${{ matrix.arch }}
+          path: bin/independence/phase-4-stdio-*.json
+          if-no-files-found: warn
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/fragai-stdio-v') || (github.event_name == 'workflow_dispatch' && inputs.publish)
+    needs: [source, compatibility]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Read immutable candidate tag
+        id: image
+        run: |
+          image=$(node -p "JSON.parse(require('fs').readFileSync('runtime/stdio-wrapper/sources.lock.json')).candidateImage")
+          case "$image" in ghcr.io/harshdeshmukh26/fragai-stdio-wrapper:v*) ;; *) exit 1 ;; esac
+          echo "reference=$image" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Refuse to overwrite a release tag
+        env:
+          IMAGE: ${{ steps.image.outputs.reference }}
+        run: |
+          for reference in "$IMAGE" "$IMAGE-amd64" "$IMAGE-arm64"; do
+            if docker manifest inspect "$reference" > /dev/null 2>manifest-error.txt; then
+              echo "Candidate already exists; use a new tag in the source lock."
+              exit 1
+            fi
+            if ! grep -Eq 'manifest unknown|MANIFEST_UNKNOWN|no such manifest' manifest-error.txt; then
+              cat manifest-error.txt
+              exit 1
+            fi
+          done
+      - name: Publish the exact images that passed compatibility checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IMAGE: ${{ steps.image.outputs.reference }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'stdio-image-*' --dir bin/stdio-images
+          for arch in amd64 arm64; do
+            docker load --input "bin/stdio-images/stdio-image-$arch/stdio-$arch.tar"
+            ARCH="$arch" node --input-type=module -e '
+              import assert from "node:assert/strict";
+              import fs from "node:fs";
+              import {execFileSync} from "node:child_process";
+              const arch=process.env.ARCH;
+              const report=JSON.parse(fs.readFileSync(`bin/stdio-images/stdio-image-${arch}/phase-4-stdio-${arch}.json`));
+              assert.equal(report.passed,true);
+              const info=JSON.parse(execFileSync("docker",["image","inspect","--platform",`linux/${arch}`,`fragai-stdio-wrapper:test-${arch}`]))[0];
+              assert.equal(info.Id,report.candidateInventory.id);
+            '
+            docker tag "fragai-stdio-wrapper:test-$arch" "$IMAGE-$arch"
+            docker push "$IMAGE-$arch"
+          done
+          docker buildx imagetools create --tag "$IMAGE" "$IMAGE-amd64" "$IMAGE-arm64"
+      - name: Record publication for the public-pull gate
+        env:
+          IMAGE: ${{ steps.image.outputs.reference }}
+        run: |
+          docker buildx imagetools inspect "$IMAGE" >> "$GITHUB_STEP_SUMMARY"
+          echo "Verify anonymous pulls and the published image on both architectures before changing the application default." >> "$GITHUB_STEP_SUMMARY"

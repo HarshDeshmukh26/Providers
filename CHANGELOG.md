@@ -1,5 +1,21 @@
 # FragAI provider migration changes
 
+## Phase 4.1 STDIO publication (2026-11-16)
+
+- Added STDIO packaging, fixtures, source verification and the separate
+  `runtime-stdio.yml` release workflow. Imported packaging from
+  governance-platform revision `a7e7c81ac0318d713a0b24f7136c5bc887b83fc6`;
+  retained all 126 upstream source-file hashes and original licences.
+- Preserved the exact MMMCP v0.1.2 source, both runtime architectures, original
+  tool versions and 60 system packages per architecture. No provider code,
+  provider image default, existing release tag or application data is changed.
+- Set the image's source association and source-lock publication repository to
+  `HarshDeshmukh26/Providers`. The GHCR namespace remains `harshdeshmukh26`.
+- Release-tag publishing runs the existing source tests and both complete
+  baseline/protocol comparisons, exports the tested image artifacts, checks
+  artifact identity and refuses to overwrite image tags. Public pulls and live
+  application validation remain separate post-publication gates.
+
 ## Encryption source migration (release candidate in preparation)
 
 - Imported 181 files from the exact AWS, Azure, and GCP source revisions
