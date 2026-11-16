@@ -87,6 +87,9 @@ The registry owner stays `harshdeshmukh26`; `Providers` is the source repository
 associated with the package. After publication, verify public visibility and
 anonymous pulls before any application-default change.
 
+The [v0.26.0-fragai.4-rc.1 release record](runtime/stdio-wrapper/releases/v0.26.0-fragai.4-rc.1.md)
+contains the published digest, source commit and passing public-pull checks.
+
 ## Remaining dependencies
 
 This stage establishes owned provider source and packaging. It does not yet
