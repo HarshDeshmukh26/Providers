@@ -1,8 +1,8 @@
 # FragAI HTTP webhook converter
 
 Phase 4.2 owns the existing HTTP webhook-to-MCP adapter's build. The source is
-an exact copy of mcp-images v0.26.0; the application continues selecting the
-retained image until publication and application/backend checks pass.
+an exact copy of mcp-images v0.26.0. Application adoption is tracked separately
+and does not happen automatically when a package is published.
 
 ## Preserved contract
 
@@ -62,3 +62,6 @@ and validation-only runs do not publish.
 The candidate reference is recorded in the lock. New packages must be verified
 as anonymously pullable before any application-default change. Publication by
 itself does not redeploy an application or complete application/backend parity.
+
+The [release record](releases/v0.26.0-fragai.4.2-rc.1.md) contains the published
+digest, source commit, successful workflow and verified anonymous pulls.
