@@ -1,0 +1,17 @@
+ARG NODE_IMAGE=node:alpine
+FROM ${NODE_IMAGE}
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY http-webhook-mcp-converter/package*.json ./
+
+# Copy application code
+COPY http-webhook-mcp-converter/server.js ./
+
+# Install dependencies
+RUN npm install
+
+# Run the server
+CMD ["node", "server.js"]
