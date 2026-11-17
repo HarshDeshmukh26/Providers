@@ -1,0 +1,136 @@
+name: FragAI HTTP webhook converter
+
+on:
+  push:
+    tags: ["fragai-webhook-v*"]
+  pull_request:
+    branches: [main]
+    paths:
+      - runtime/http-webhook-converter/**
+      - tools/verify-webhook-*.mjs
+      - tools/build-independent-webhook.ps1
+      - .github/workflows/runtime-webhook.yml
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the exact tested candidate from the Providers repository
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: runtime-webhook-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.15.0"
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Verify exact source, dependency locks and release tag
+        env:
+          RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: |
+          node tools/verify-webhook-sources.mjs --require-tracked
+          if test -n "$RELEASE_TAG"; then
+            version=$(node -p "JSON.parse(require('fs').readFileSync('runtime/http-webhook-converter/sources.lock.json')).candidateImage.split(':').at(-1)")
+            test "$RELEASE_TAG" = "fragai-webhook-$version"
+          fi
+      - name: Build and compare selected architecture
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          image="fragai-http-webhook-converter:test-$ARCH"
+          docker buildx build --platform "linux/$ARCH" --load --tag "$image" runtime/http-webhook-converter
+          baseline=$(node -p "JSON.parse(require('fs').readFileSync('runtime/http-webhook-converter/sources.lock.json')).baselineImage")
+          docker pull --platform "linux/$ARCH" "$baseline"
+          node tools/verify-webhook-converter.mjs --platform "linux/$ARCH" --image "$image"
+      - name: Summarize compatibility results
+        if: always()
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          report="bin/independence/phase-4-webhook-$ARCH.json"
+          if test -f "$report"; then
+            jq -r '"### Webhook compatibility: " + .platform, "", "Passed: " + (.passed | tostring), "", (.stages[] | "- " + .name + ": " + (.checks | length | tostring) + " checks")' "$report" >> "$GITHUB_STEP_SUMMARY"
+            cat "$report"
+          else
+            echo 'No compatibility report; inspect the preceding failure.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  publish:
+    if: github.repository == 'HarshDeshmukh26/Providers' && (startsWith(github.ref, 'refs/tags/fragai-webhook-v') || (github.event_name == 'workflow_dispatch' && inputs.publish))
+    needs: compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.15.0"
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Verify source and select immutable candidate tag
+        run: |
+          node tools/verify-webhook-sources.mjs --require-tracked
+          image=$(node -p "JSON.parse(require('fs').readFileSync('runtime/http-webhook-converter/sources.lock.json')).candidateImage")
+          echo "IMAGE=$image" >> "$GITHUB_ENV"
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Refuse to overwrite published version references
+        run: |
+          for reference in "$IMAGE" "$IMAGE-amd64" "$IMAGE-arm64"; do
+            if docker manifest inspect "$reference" > /dev/null 2>manifest-error.txt; then
+              echo "Reference already exists; use a new release version: $reference"
+              exit 1
+            fi
+            if ! grep -Eq 'manifest unknown|MANIFEST_UNKNOWN|no such manifest|NAME_UNKNOWN' manifest-error.txt; then
+              cat manifest-error.txt
+              exit 1
+            fi
+          done
+      - name: Build and retest the exact images for publication
+        env:
+          SOURCE_REPOSITORY: ${{ github.repository }}
+        run: |
+          baseline=$(node -p "JSON.parse(require('fs').readFileSync('runtime/http-webhook-converter/sources.lock.json')).baselineImage")
+          for arch in amd64 arm64; do
+            docker buildx build --platform "linux/$arch" --load --tag "$IMAGE-$arch" \
+              --label "org.opencontainers.image.source=https://github.com/$SOURCE_REPOSITORY" \
+              --label "org.opencontainers.image.revision=$GITHUB_SHA" runtime/http-webhook-converter
+            docker pull --platform "linux/$arch" "$baseline"
+            node tools/verify-webhook-converter.mjs --platform "linux/$arch" --image "$IMAGE-$arch"
+          done
+      - name: Publish tested architectures and versioned index
+        run: |
+          docker push "$IMAGE-amd64"
+          docker push "$IMAGE-arm64"
+          docker buildx imagetools create --tag "$IMAGE" "$IMAGE-amd64" "$IMAGE-arm64"
+          docker buildx imagetools inspect "$IMAGE" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Verify anonymous pulls before changing an application default.' >> "$GITHUB_STEP_SUMMARY"

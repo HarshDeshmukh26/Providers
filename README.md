@@ -90,6 +90,20 @@ anonymous pulls before any application-default change.
 The [v0.26.0-fragai.4-rc.1 release record](runtime/stdio-wrapper/releases/v0.26.0-fragai.4-rc.1.md)
 contains the published digest, source commit and passing public-pull checks.
 
+## HTTP webhook converter package
+
+The Phase 4.2 converter is maintained under `runtime/http-webhook-converter`.
+It preserves the exact mcp-images v0.26.0 application files, Node/npm versions,
+dependency graph, MCP sessions, webhook signatures and HTTP-status decisions.
+Its component README documents local builds and compatibility checks.
+
+The dedicated `runtime-webhook.yml` workflow validates AMD64 and ARM64.
+Publication requires an explicit `fragai-webhook-` tag matching the component
+source lock, or a manual publication request. The release job reruns both
+architecture checks before pushing the exact tested images. It does not
+change application defaults. Verify package visibility and anonymous pulls
+before a separate application/backend cutover.
+
 ## Remaining dependencies
 
 This stage establishes owned provider source and packaging. It does not yet

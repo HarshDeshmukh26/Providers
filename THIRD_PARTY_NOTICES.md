@@ -25,3 +25,12 @@ an independent encryption image because it clones upstream HEAD. The root
 `encryption-bins` target uses only the imported `encryption/` source trees and
 does not invoke that historical script. It preserves the installed binary
 names, build entry points, static build flags, and version metadata keys.
+
+## HTTP webhook converter
+
+`runtime/http-webhook-converter/source/mcp-images` contains six exact source
+files from `obot-platform/mcp-images` v0.26.0, revision
+`557dc93904933e9874ba5489c9b2e7c6adb8dcac`, under Apache-2.0. The component
+retains the original license, package manifests and source-file hashes. Its
+own notices explain the pinned official Node/Alpine input and npm dependencies.
+Protocol names and the existing signature header are preserved for compatibility.

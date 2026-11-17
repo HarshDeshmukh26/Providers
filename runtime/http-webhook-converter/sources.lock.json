@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "component": "http-webhook-converter",
+  "candidateImage": "ghcr.io/harshdeshmukh26/fragai-http-webhook-converter:v0.26.0-fragai.4.2-rc.1",
+  "baselineImage": "ghcr.io/obot-platform/mcp-images/http-webhook-mcp-converter@sha256:a70ab3dd8554ec5b0949b8a24e9b989ef573828144b08b782c6a78c51674cdf9",
+  "inputs": {
+    "NODE_IMAGE": "node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293"
+  },
+  "source": {
+    "repository": "https://github.com/obot-platform/mcp-images",
+    "revision": "557dc93904933e9874ba5489c9b2e7c6adb8dcac",
+    "version": "v0.26.0",
+    "directory": "source/mcp-images",
+    "license": "Apache-2.0",
+    "files": {
+      "LICENSE": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "mcp-servers/Dockerfile.http-webhook-mcp-converter": "eed37d49bd677faeda5f7b90783a5c4d73158096e83d14ebcc89f1f68d5e17c9",
+      "repository-images.yaml": "ea24790238aa6ffc20954283a4b4e6393248d455333abe970e2ba70cf4124007",
+      "http-webhook-mcp-converter/server.js": "bf08a0b33def8db2cad311f41c661f456585da1b4c18f2323f0f8c332c2b8281",
+      "http-webhook-mcp-converter/package.json": "90ad94d793a4a6b121bddbddb47122876f00d1395d9b4d9ba5616c1b55709495",
+      "http-webhook-mcp-converter/package-lock.json": "fb6b5a7bb91ae9a590dcf311bd8bf0466df49b96f453885e9d94e05f2ba2ff85"
+    }
+  },
+  "inventories": {
+    "amd64": {
+      "file": "inventories/amd64.json",
+      "sha256": "2031028d8ebfa1ff664ac1c2fb9cc1898f7330b98ab240af6b8767f694545bc6"
+    },
+    "arm64": {
+      "file": "inventories/arm64.json",
+      "sha256": "2031028d8ebfa1ff664ac1c2fb9cc1898f7330b98ab240af6b8767f694545bc6"
+    }
+  }
+}
