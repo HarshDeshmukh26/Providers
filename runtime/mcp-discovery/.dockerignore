@@ -1,0 +1,12 @@
+**
+!source/
+!source/obot-mcp-server/
+!source/obot-mcp-server/main.py
+!source/obot-mcp-server/pyproject.toml
+!source/obot-mcp-server/uv.lock
+!source/obot-mcp-server/test_server.py
+!source/obot-mcp-server/obot_mcp/
+!source/obot-mcp-server/obot_mcp/*.py
+!sources.lock.json
+!THIRD_PARTY_NOTICES.md
+!PUBLICATION_AUTHORIZATION.md

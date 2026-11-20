@@ -3,3 +3,4 @@
 runtime/stdio-wrapper/source/** -text
 runtime/stdio-wrapper/packages/** text eol=lf
 runtime/stdio-wrapper/tests/** text eol=lf
+runtime/mcp-discovery/source/** -text

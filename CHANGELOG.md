@@ -1,5 +1,37 @@
 # FragAI provider migration changes
 
+## Phase 4.3 publication authorized by owner (2026-11-20)
+
+- The owner, who previously stated they hold redistribution permission,
+  explicitly directed publication before supplying its text. Preserve that
+  release-specific instruction in `PUBLICATION_AUTHORIZATION.md`, hash it in the
+  source lock and include it in the image. Terms remain marked as outstanding;
+  the record is not represented as an upstream licence or independent verification.
+- Extend the publication guard to accept that exact version's locked instruction.
+  Unknown authority states, different release versions and changed/missing records
+  remain blocked. Preserve all ten upstream source hashes and runtime interfaces.
+- Rebuild and retest the actual publication images with the notice and source
+  revision labels before publishing; keep the application default separate.
+
+## Phase 4.3 MCP discovery local preparation (2026-11-20)
+
+- Imported the exact discovery source revision
+  `5051acefdceb073c32ea4ca78683d3922aea643b` with its original dependency lock
+  and 86 existing unit tests. Added a digest-pinned independent Python/uv build.
+- Added integrity verification, local build orchestration, live MCP protocol
+  compatibility tests, ownership-checked cleanup and a separate release recipe.
+  Original tool names, authentication forwarding, elicitation, API paths and
+  launch configuration are retained; no discovery implementation is rewritten.
+- Owner states that redistribution permission exists and will provide its terms.
+  Local build/testing is authorized first. Publication remains blocked until the
+  permission text and required notices are recorded; no new licence is assigned.
+- Auth/model/encryption, STDIO and webhook packages, application defaults,
+  customer data and the running application are unchanged.
+- Local AMD64 and emulated ARM64 builds passed launch/Python/89-package parity,
+  the 86 original tests against each runtime, and 26 real MCP scenarios in each
+  baseline/candidate/restart/rollback stage. Cleanup passed with no production
+  changes. See `runtime/mcp-discovery/LOCAL_REVIEW.md` for identities and limits.
+
 ## Phase 4.1 STDIO publication (2026-11-16)
 
 - Added STDIO packaging, fixtures, source verification and the separate

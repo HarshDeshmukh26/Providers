@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "component": "mcp-discovery",
+  "candidateImage": "ghcr.io/harshdeshmukh26/fragai-mcp-server:v0.2.0-fragai.4.3-rc.1",
+  "baselineImage": "ghcr.io/obot-platform/obot-mcp-server@sha256:53f8366400b683cb8ae2419c6546116a02c0928b1dbe87ac791a2eaf2a93049d",
+  "inputs": {
+    "PYTHON_IMAGE": "python:3.13.13-slim@sha256:aa938a849bcb82dce8f49480f056ab82bf5c1c3ebc294f0430f37b6820e7f286",
+    "UV_IMAGE": "ghcr.io/astral-sh/uv:0.12.5@sha256:e85be844203885286c60ffad8a858d48afb6c5a5c237ca0e67f12e74b8f174b1"
+  },
+  "source": {
+    "repository": "https://github.com/obot-platform/obot-mcp-server",
+    "revision": "5051acefdceb073c32ea4ca78683d3922aea643b",
+    "version": "v0.2.0",
+    "directory": "source/obot-mcp-server",
+    "files": {
+      "Dockerfile": "5330f24ca66d3aa0940a0f3bbf61a48acd962749d057879a22ffab918b7a58d0",
+      "README.md": "523b8d9e0ff908694c80aedbccb267eb1ad1c1e4ef073bd516567a03b6e7373b",
+      "main.py": "0b674d9ce285473f1d80a96be74f8efb05c089917e371477be4aed5961fab7af",
+      "obot_mcp/__init__.py": "097e3a53ff4611a15f51eb9820679e2b9adbe533ba2d5c42a7146ed1c3c00c6a",
+      "obot_mcp/client.py": "225bb7aa34dce800741a4878427e70c4a66d98a1ef6ebdd6b6e46ef9c2cc6535",
+      "obot_mcp/config.py": "f0c58505ad00ef95f3eda390c490b5eb283bf6f9cd4bbd450b4af7f900f8970d",
+      "obot_mcp/server.py": "b91600efa3c90e7031664ca60333b063de1f8ce2c93f369127bdb1e104b328ca",
+      "pyproject.toml": "802844514ee6a07dfd7412436ec6df033658d9af53f58658c9a60bb529b5fb0c",
+      "test_server.py": "7c419925d5baf28321dc77580123a18e021e7d39181ac409bfb1e63e453c5093",
+      "uv.lock": "aa06b15da1139fa20ce03e072d914bef565c5d1aae76286aa1488b9ba284abfb"
+    }
+  },
+  "redistribution": {
+    "status": "owner-attested-pending-terms",
+    "authorizedImage": "ghcr.io/harshdeshmukh26/fragai-mcp-server:v0.2.0-fragai.4.3-rc.1",
+    "authorizationFile": "PUBLICATION_AUTHORIZATION.md",
+    "authorizationSha256": "7de296e7f2daa07c4fe1288f905fbd0e5a20e3daeecfc5580b5551b9ac7bd7d5",
+    "recordedDate": "2026-11-20",
+    "note": "Project owner states that redistribution permission exists and explicitly instructed publication before supplying its terms. This release-specific attestation is recorded; upstream terms remain outstanding and have not been independently verified. No upstream licence is assigned."
+  }
+}
