@@ -1,5 +1,18 @@
 # FragAI provider migration changes
 
+## Phase 4.3 discovery publication completed (2026-11-20)
+
+- Publish `ghcr.io/harshdeshmukh26/fragai-mcp-server:v0.2.0-fragai.4.3-rc.1`
+  from `fd5c57ce0e0879410c796902b37f582dcbe4a5bd` after successful AMD64 and
+  ARM64 compatibility gates and retesting the exact publication images.
+- Record immutable index
+  `sha256:9a1da88b0e38fa687d44fdda72622f0491967680dcc9190a9238a96e2ee12f00`,
+  architecture digests and workflow `44780930778` in the component publication
+  record. Anonymous manifests, provenance labels and full pulls pass on both
+  architectures without saved registry credentials.
+- Keep terms explicitly pending under the recorded owner attestation. The
+  governance default, deployed application and customer data are unchanged.
+
 ## Phase 4.3 publication authorized by owner (2026-11-20)
 
 - The owner, who previously stated they hold redistribution permission,

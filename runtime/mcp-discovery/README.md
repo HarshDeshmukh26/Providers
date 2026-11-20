@@ -69,8 +69,13 @@ hardening the inherited OAuth timeout behavior require a separate reviewed chang
 The [local review results](LOCAL_REVIEW.md) record passing architecture checks,
 local image identities and the remaining release limits.
 
-Intended package:
+Published package:
 `ghcr.io/harshdeshmukh26/fragai-mcp-server:v0.2.0-fragai.4.3-rc.1`.
+
+The [publication record](PUBLICATION.md) contains the immutable index and platform
+digests, successful exact-image compatibility run and anonymous pulls on both
+architectures. The source commit identified there remains the release input;
+subsequent documentation commits do not change that published artifact.
 
 Before publication: preserve the source notices and recorded authority,
 pass `--publication`, review and commit the source branch, and run both

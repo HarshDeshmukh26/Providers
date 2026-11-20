@@ -53,3 +53,8 @@ lock. Terms remain explicitly outstanding, rather than marked as reviewed.
 The publication images will be rebuilt/retested with that metadata and the
 owned repository commit label; the local image identities above remain the
 historical pre-publication candidates.
+
+Publication subsequently succeeded with fresh exact-image tests on both
+architectures, followed by anonymous registry inspection and full Docker pulls.
+See [PUBLICATION.md](PUBLICATION.md) for the distinct published identities,
+release source commit, workflow and remaining application-default work.
