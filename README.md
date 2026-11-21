@@ -104,6 +104,17 @@ architecture checks before pushing the exact tested images. It does not
 change application defaults. Verify package visibility and anonymous pulls
 before a separate application/backend cutover.
 
+## MCP search and discovery package (local review)
+
+Phase 4.3 packaging is under `runtime/mcp-discovery`. It preserves the exact
+obot-mcp-server v0.2.0 source, dependency lock and all four discovery/connection
+tools. See the component README for local builds and baseline comparisons.
+Redistribution terms are still pending. The owner explicitly instructed this
+candidate's publication based on their stated redistribution permission; the
+release-specific record is retained in its source lock and image notices.
+The dedicated `runtime-discovery.yml` job verifies that record before registry
+login. No upstream licence is invented. Application defaults are unchanged.
+
 ## Remaining dependencies
 
 This stage establishes owned provider source and packaging. It does not yet
