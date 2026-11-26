@@ -3,12 +3,22 @@ name: FragAI provider images
 on:
   pull_request:
   push:
-    branches: [main, fragai/provider-source-migration, fragai/encryption-source-migration]
-    tags: ['v*']
+    branches:
+      [
+        main,
+        fragai/provider-source-migration,
+        fragai/encryption-source-migration,
+      ]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  GOPROXY: https://proxy.golang.org
+  GONOPROXY: github.com/obot-platform
+  GOVCS: "*:off"
 
 concurrency:
   group: providers-${{ github.ref }}
@@ -25,10 +35,12 @@ jobs:
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: community/github-auth-provider/go.mod
-          cache-dependency-path: |
-            community/*/go.sum
-            enterprise/*/go.sum
-            encryption/*/go.sum
+          cache: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.15.0"
+      - name: Verify checksummed Go source snapshots
+        run: node tools/verify-provider-go-sources.mjs
       - name: Run provider unit tests
         run: bash scripts/test.sh
       - name: Run encryption provider unit and mock integration tests
@@ -82,5 +94,3 @@ jobs:
           push: ${{ startsWith(github.ref, 'refs/tags/') }}
           tags: ${{ steps.image.outputs.reference }}
           build-args: BUILD_REVISION=${{ github.sha }}
-          cache-from: type=gha,scope=${{ matrix.target }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.target }}

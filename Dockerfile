@@ -2,6 +2,9 @@
 ARG BUILD_IMAGE=cgr.dev/chainguard/wolfi-base
 FROM --platform=$BUILDPLATFORM ${BUILD_IMAGE} AS base
 RUN apk add --no-cache bash go-1.27 make git ca-certificates upx
+ENV GOPROXY=https://proxy.golang.org \
+    GONOPROXY=github.com/obot-platform \
+    GOVCS=*:off
 COPY sources.lock.env /sources.lock.env
 COPY --chmod=0755 scripts/package.sh /usr/local/bin/package-fragai-providers
 
@@ -9,6 +12,7 @@ FROM base AS community-build
 ARG TARGETOS
 ARG TARGETARCH
 ARG COMPRESS_BINARIES=true
+COPY third_party/go/ /obot-providers/third_party/go/
 COPY community/ /obot-providers/providers/
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/root/go/pkg/mod \
@@ -19,6 +23,7 @@ FROM base AS enterprise-build
 ARG TARGETOS
 ARG TARGETARCH
 ARG COMPRESS_BINARIES=true
+COPY third_party/go/ /obot-providers/third_party/go/
 COPY enterprise/ /obot-providers/enterprise-providers/
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/root/go/pkg/mod \
@@ -27,6 +32,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 
 FROM base AS tests
 ENV CGO_ENABLED=0
+COPY third_party/go/ /source/third_party/go/
 COPY community/ /source/community/
 COPY enterprise/ /source/enterprise/
 COPY scripts/test.sh /source/scripts/test.sh

@@ -16,15 +16,29 @@ dependencies retain their own licenses; each module's `go.mod` and `go.sum`
 record its dependencies. The image source label identifies the maintained copy,
 not a transfer of ownership of upstream copyrights.
 
-These first-stage builds still fetch the pinned Go modules in the imported
-source, including some Obot modules and the OAuth2 Proxy fork. Those inputs must
-be mirrored or vendored in a later step before claiming complete build
-independence. The imported community encryption packager is retained as source
-history and is not invoked by the root Dockerfile; it must not be used to build
-an independent encryption image because it clones upstream HEAD. The root
+## Go dependencies used by the provider images
+
+The provider build uses the following module copies from `third_party/go`.
+Each copy matches the original module and `go.mod` checksums. The lock there
+records the exact versions, source revisions, licences and source tree hashes.
+
+| Directory under `third_party/go` | Source revision | Licence |
+| --- | --- | --- |
+| `chat-completion-client` | `88dd50945c18205ee3300ebdaa787eaa94fa009d` | Apache-2.0 |
+| `auth-providers-common` | `9ab827189ee645232a18d13c09143eae10a879c3` | Apache-2.0 |
+| `openai-model-provider` | `d90e9d6df0eb3545e455c81856e2d615466c252a` | Apache-2.0 |
+| `oauth2-proxy` | `5704f042a6ff237d162cb420b8281c5202f1d7c6` | MIT |
+
+The community OpenAI and auth helpers already used by other providers stay in
+place. Gemini and enterprise auth use the separate revisions recorded above.
+The root build copies their dependency licence texts and lock into the provider
+images. Module paths, binary entry points and configuration keys stay compatible.
+
+The imported community encryption packager is retained as source history.
+The root
 `encryption-bins` target uses only the imported `encryption/` source trees and
-does not invoke that historical script. It preserves the installed binary
-names, build entry points, static build flags, and version metadata keys.
+preserves the installed binary names, build entry points, static build flags,
+and version metadata keys.
 
 ## HTTP webhook converter
 
