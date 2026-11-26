@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "modules": [
+    {
+      "module": "github.com/obot-platform/chat-completion-client",
+      "version": "v0.0.0-20260529163740-88dd50945c18",
+      "source": "https://github.com/obot-platform/chat-completion-client",
+      "revision": "88dd50945c18205ee3300ebdaa787eaa94fa009d",
+      "moduleSum": "h1:dF7Ao7qL7+PE5+Vo0nakNjKZpNaegpQDOFEIn4++R/c=",
+      "goModSum": "h1:YslCtQ/xUKpZUmiW8AFp2hBefikf4KcbEk57Jso1JAU=",
+      "directory": "third_party/go/chat-completion-client",
+      "license": "Apache-2.0",
+      "fileCount": 15,
+      "treeSha256": "c1fd438f4edc73454b6b67f8ed211ca5f427f3fcdb792d6f6c60d2f766435a22"
+    },
+    {
+      "module": "github.com/obot-platform/providers/auth-providers-common",
+      "version": "v0.0.0-20260717172559-9ab827189ee6",
+      "source": "https://github.com/obot-platform/providers",
+      "sourceSubdirectory": "auth-providers-common",
+      "revision": "9ab827189ee645232a18d13c09143eae10a879c3",
+      "moduleSum": "h1:KiwO44/S3FPLI10hZ7VX5Rq8R4iMPEQv74bubihWCd0=",
+      "goModSum": "h1:bpOffocRUeoZKKGF82koSwVUMoASoyZVzksxaiArrK4=",
+      "directory": "third_party/go/auth-providers-common",
+      "license": "Apache-2.0",
+      "fileCount": 7,
+      "treeSha256": "b9e31694e0192bb31edc22b2e650f5f610c62c39b95027f4f0e6ce925fec7299"
+    },
+    {
+      "module": "github.com/obot-platform/providers/openai-model-provider",
+      "version": "v0.0.0-20260605221712-d90e9d6df0eb",
+      "source": "https://github.com/obot-platform/providers",
+      "sourceSubdirectory": "openai-model-provider",
+      "revision": "d90e9d6df0eb3545e455c81856e2d615466c252a",
+      "moduleSum": "h1:2Km/4qab309p6WWcEwPpCuUmf792xBu3DhWceYhBkLs=",
+      "goModSum": "h1:I/k7SdnKOdeeMee7vU7ZwsJ1fLFJB6ayMdLKKux/bX4=",
+      "directory": "third_party/go/openai-model-provider",
+      "license": "Apache-2.0",
+      "fileCount": 10,
+      "treeSha256": "ad64843b3fea969b5814305d1d110731779d1ac89c3028c1f90947830c451b99"
+    },
+    {
+      "module": "github.com/obot-platform/oauth2-proxy/v7",
+      "version": "v7.0.0-20260718004156-5704f042a6ff",
+      "source": "https://github.com/obot-platform/oauth2-proxy",
+      "revision": "5704f042a6ff237d162cb420b8281c5202f1d7c6",
+      "moduleSum": "h1:bZeGPbNn7O5vnhRv9PQ6vNgInvEJSP1iyVVQyLWJl00=",
+      "goModSum": "h1:Fzn9iO2soLotFAHmSgVA9wMcnnKw4dew+FbZucQsHZ4=",
+      "directory": "third_party/go/oauth2-proxy",
+      "license": "MIT",
+      "fileCount": 788,
+      "treeSha256": "520a696d46796dfae4d25b91ce94fdfb22c77b8ec23fcdc3082f9797c52e5f3a"
+    }
+  ]
+}

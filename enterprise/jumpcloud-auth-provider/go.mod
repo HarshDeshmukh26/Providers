@@ -3,7 +3,7 @@ module github.com/obot-platform/enterprise-providers/jumpcloud-auth-provider
 go 1.26.4
 
 replace (
-	github.com/oauth2-proxy/oauth2-proxy/v7 => github.com/obot-platform/oauth2-proxy/v7 v7.0.0-20260718004156-5704f042a6ff
+	github.com/oauth2-proxy/oauth2-proxy/v7 => ../../third_party/go/oauth2-proxy
 	github.com/obot-platform/enterprise-providers/authcommon => ../authcommon
 )
 
@@ -84,3 +84,5 @@ require (
 	gorm.io/gorm v1.31.1 // indirect
 	k8s.io/apimachinery v0.35.3 // indirect
 )
+
+replace github.com/obot-platform/providers/auth-providers-common => ../../third_party/go/auth-providers-common

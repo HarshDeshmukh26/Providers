@@ -8,3 +8,7 @@ require (
 )
 
 require cloud.google.com/go/compute/metadata v0.3.0 // indirect
+
+replace github.com/obot-platform/providers/openai-model-provider => ../../third_party/go/openai-model-provider
+
+replace github.com/obot-platform/chat-completion-client => ../../third_party/go/chat-completion-client

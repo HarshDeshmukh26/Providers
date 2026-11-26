@@ -18,6 +18,12 @@ docker build --target encryption-bins -t ghcr.io/harshdeshmukh26/fragai-encrypti
 For faster development builds, pass `--build-arg COMPRESS_BINARIES=false`.
 The release default compresses and verifies the packaged binaries with UPX.
 All targets include their source licenses and `sources.lock.env` provenance.
+The root Dockerfile is the build entry point for the maintained community and
+enterprise bundles. It uses checksummed local copies of the four upstream Go
+dependencies under `third_party/go`, including the exact OAuth2 Proxy fork.
+Go still downloads other dependencies from the public module proxy and
+verifies their checksums. The build excludes Obot modules from that proxy
+and disables direct Go VCS downloads.
 The encryption target builds the exact recorded AWS, Azure, and GCP snapshots
 under `encryption/`, without cloning upstream repositories. It keeps the
 installed executable names, CLI interfaces, and version metadata keys. Cloud
@@ -31,6 +37,10 @@ With Go matching the modules' `go` directives installed, run:
 bash scripts/test.sh
 bash scripts/test-encryption.sh
 ```
+
+CI verifies the tracked snapshots against `third_party/go/sources.lock.json`
+before running these suites with the same Go download policy and an empty
+dependency cache.
 
 The governance-platform migration tooling additionally compares provider
 manifests and executable paths against its installed baseline. A successful

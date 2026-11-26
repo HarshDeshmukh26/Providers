@@ -31,6 +31,11 @@ chmod 1777 /package/tmp
 cp /etc/ssl/certs/ca-certificates.crt /package/etc/ssl/certs/
 cp LICENSE "/package/licenses/$kind-LICENSE"
 cp /sources.lock.env /package/licenses/sources.lock.env
+dependency_sources=/obot-providers/third_party/go
+cp "$dependency_sources/sources.lock.json" /package/licenses/go-sources.lock.json
+for module in "$dependency_sources"/*/LICENSE; do
+    cp "$module" "/package/licenses/$(basename "$(dirname "$module")")-LICENSE"
+done
 cp -a auth-providers model-providers "$destination/"
 
 for binary in */bin/obot-provider; do
