@@ -6,11 +6,11 @@ import (
 	"testing"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/obot-platform/mmmcp/catalog"
-	"github.com/obot-platform/mmmcp/component"
-	componenthttp "github.com/obot-platform/mmmcp/component/http"
-	"github.com/obot-platform/mmmcp/config"
-	"github.com/obot-platform/mmmcp/testserver"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/catalog"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component"
+	componenthttp "github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component/http"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/testserver"
 )
 
 type staticDiscoverer struct {

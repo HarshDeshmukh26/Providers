@@ -1,4 +1,4 @@
-module github.com/obot-platform/mmmcp
+module github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp
 
 go 1.27
 

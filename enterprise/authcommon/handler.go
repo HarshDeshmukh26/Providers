@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 )
 
 type FetchGroupPageFunc func(context.Context, PageRequest) (PageResult, error)

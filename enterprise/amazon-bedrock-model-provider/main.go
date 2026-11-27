@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/obot-platform/enterprise-providers/amazon-bedrock-model-provider/bedrockcommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/amazon-bedrock-model-provider/bedrockcommon"
 )
 
 func main() {

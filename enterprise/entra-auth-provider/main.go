@@ -12,15 +12,15 @@ import (
 	"strings"
 	"time"
 
+	"github.com/HarshDeshmukh26/Providers/enterprise/authcommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/entra-auth-provider/pkg/client"
+	"github.com/HarshDeshmukh26/Providers/enterprise/entra-auth-provider/pkg/profile"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/env"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 	msgraphsdkgo "github.com/microsoftgraph/msgraph-sdk-go"
 	oauth2proxy "github.com/oauth2-proxy/oauth2-proxy/v7"
 	"github.com/oauth2-proxy/oauth2-proxy/v7/pkg/apis/options"
 	"github.com/oauth2-proxy/oauth2-proxy/v7/pkg/validation"
-	"github.com/obot-platform/enterprise-providers/authcommon"
-	"github.com/obot-platform/enterprise-providers/entra-auth-provider/pkg/client"
-	"github.com/obot-platform/enterprise-providers/entra-auth-provider/pkg/profile"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/env"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
 )
 
 type Options struct {

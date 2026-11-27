@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"strings"
 
-	openai "github.com/obot-platform/chat-completion-client"
-	"github.com/obot-platform/providers/openai-model-provider/proxy"
+	openai "github.com/HarshDeshmukh26/Providers/third_party/go/chat-completion-client"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/openai-model-provider/proxy"
 )
 
 type Server struct {

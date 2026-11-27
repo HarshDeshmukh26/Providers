@@ -1,16 +1,16 @@
-module github.com/obot-platform/providers/github-auth-provider
+module github.com/HarshDeshmukh26/Providers/community/github-auth-provider
 
 go 1.27
 
 replace (
+	github.com/HarshDeshmukh26/Providers/community/auth-providers-common => ../auth-providers-common
 	github.com/oauth2-proxy/oauth2-proxy/v7 => ../../third_party/go/oauth2-proxy
-	github.com/obot-platform/providers/auth-providers-common => ../auth-providers-common
 )
 
 require (
+	github.com/HarshDeshmukh26/Providers/community/auth-providers-common v0.0.0-20241008222508-3c6174b443e7
 	github.com/hashicorp/golang-lru/v2 v2.0.7
 	github.com/oauth2-proxy/oauth2-proxy/v7 v7.8.1
-	github.com/obot-platform/providers/auth-providers-common v0.0.0-20241008222508-3c6174b443e7
 )
 
 require (

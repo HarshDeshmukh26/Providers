@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"github.com/modelcontextprotocol/go-sdk/auth"
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 	"golang.org/x/oauth2"
 )
 

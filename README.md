@@ -127,8 +127,11 @@ login. No upstream licence is invented. Application defaults are unchanged.
 
 ## Remaining dependencies
 
-This stage establishes owned provider source and packaging. It does not yet
-remove the imported providers' external Obot Go modules. Runtime MCP/agent
-images and the main application's Go dependencies
-remain separate migration steps. See `THIRD_PARTY_NOTICES.md` for provenance
-and the application repository's `docs/obot-independence-plan.md` for the plan.
+Community and enterprise provider modules use paths under
+`github.com/HarshDeshmukh26/Providers`. Their shared helpers resolve from
+local directories. The pinned enterprise auth and Gemini helper snapshots
+have their own module paths, distinct from the community helper copies.
+`third_party/go/sources.lock.json` records upstream revisions and hashes
+alongside the hashes of the locally patched sources. See
+`THIRD_PARTY_NOTICES.md` for attribution and the Governance Platform
+migration plan for release sequencing.

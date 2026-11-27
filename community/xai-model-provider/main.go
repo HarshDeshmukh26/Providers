@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/obot-platform/providers/openai-model-provider/proxy"
+	"github.com/HarshDeshmukh26/Providers/community/openai-model-provider/proxy"
 )
 
 // RewriteGrokModels marks only Grok models as LLMs

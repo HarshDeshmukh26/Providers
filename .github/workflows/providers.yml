@@ -17,7 +17,7 @@ permissions:
 
 env:
   GOPROXY: https://proxy.golang.org
-  GONOPROXY: github.com/obot-platform
+  GONOPROXY: github.com/obot-platform,github.com/HarshDeshmukh26
   GOVCS: "*:off"
 
 concurrency:

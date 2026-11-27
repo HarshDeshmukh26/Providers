@@ -18,9 +18,9 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/obot-platform/mmmcp"
-	"github.com/obot-platform/mmmcp/config"
-	"github.com/obot-platform/mmmcp/testserver"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/testserver"
 )
 
 func TestStatefulSSEReplayPersistsInSQLiteAndCleansUp(t *testing.T) {

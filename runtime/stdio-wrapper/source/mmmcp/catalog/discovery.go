@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/obot-platform/mmmcp/component"
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 )
 
 // Compile discovers every configured component and builds a complete snapshot.

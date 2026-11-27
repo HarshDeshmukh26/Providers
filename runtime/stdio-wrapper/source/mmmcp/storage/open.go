@@ -9,7 +9,7 @@ import (
 	_ "github.com/glebarez/go-sqlite"  // Register the SQLite database/sql driver.
 	_ "github.com/go-sql-driver/mysql" // Register the MySQL database/sql driver.
 	_ "github.com/jackc/pgx/v5/stdlib" // Register the PostgreSQL database/sql driver.
-	"github.com/obot-platform/mmmcp/storage/migrations"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/storage/migrations"
 )
 
 // Open classifies and opens a supported SQL store, verifies it, and applies

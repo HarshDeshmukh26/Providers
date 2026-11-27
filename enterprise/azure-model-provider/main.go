@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/obot-platform/enterprise-providers/azure-model-provider/azurecommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/azure-model-provider/azurecommon"
 )
 
 const azureAPIVersion = "2024-10-21"

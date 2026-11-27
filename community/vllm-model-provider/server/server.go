@@ -14,7 +14,7 @@ import (
 	"os"
 	"path"
 
-	openai "github.com/obot-platform/chat-completion-client"
+	openai "github.com/HarshDeshmukh26/Providers/third_party/go/chat-completion-client"
 )
 
 func Run(apiKey, endpointStr, port string) error {

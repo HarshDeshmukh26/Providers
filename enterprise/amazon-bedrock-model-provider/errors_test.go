@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/obot-platform/enterprise-providers/amazon-bedrock-model-provider/bedrockcommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/amazon-bedrock-model-provider/bedrockcommon"
 )
 
 func TestValidationErrorMessageForHTTPError(t *testing.T) {

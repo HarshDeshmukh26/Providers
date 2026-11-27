@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/HarshDeshmukh26/Providers/enterprise/authcommon"
 	"github.com/microsoftgraph/msgraph-sdk-go/models/odataerrors"
-	"github.com/obot-platform/enterprise-providers/authcommon"
 )
 
 func TestExpandNextLinkAcceptsGraphLinks(t *testing.T) {

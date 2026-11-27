@@ -41,6 +41,17 @@ for (const source of lock.sources) {
   assert.match(source.revision, /^[a-f0-9]{40}$/);
   assert.equal(source.directory, `source/${source.name}`);
   assert(source.files.LICENSE, `${source.name}: license missing`);
+  for (const file of Object.keys(source.patchedFiles ?? {})) {
+    assert(source.files[file], `${source.name}: unknown patched file ${file}`);
+    assert(file.endsWith(".go") || file === "go.mod" || file === "go.sum");
+  }
+  if (source.localModule) {
+    const goMod = fs.readFileSync(
+      path.join(directory, source.directory, "go.mod"),
+      "utf8",
+    );
+    assert.equal(goMod.match(/^module (\S+)/m)?.[1], source.localModule);
+  }
   const actual = [];
   function visit(relative = "") {
     for (const entry of fs.readdirSync(
@@ -57,7 +68,7 @@ for (const source of lock.sources) {
           .digest("hex");
         assert.equal(
           hash,
-          source.files[name],
+          source.patchedFiles?.[name] ?? source.files[name],
           `${source.name}: modified source ${name}`,
         );
         names.push(`runtime/stdio-wrapper/${source.directory}/${name}`);

@@ -11,8 +11,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/obot-platform/enterprise-providers/authcommon"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
+	"github.com/HarshDeshmukh26/Providers/enterprise/authcommon"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 	"github.com/okta/okta-sdk-golang/v5/okta"
 )
 

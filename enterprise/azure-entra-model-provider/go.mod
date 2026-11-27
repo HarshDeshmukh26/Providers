@@ -1,7 +1,7 @@
-module github.com/obot-platform/enterprise-providers/azure-entra-model-provider
+module github.com/HarshDeshmukh26/Providers/enterprise/azure-entra-model-provider
 
 go 1.26.4
 
-require github.com/obot-platform/enterprise-providers/azure-model-provider v0.0.0
+require github.com/HarshDeshmukh26/Providers/enterprise/azure-model-provider v0.0.0
 
-replace github.com/obot-platform/enterprise-providers/azure-model-provider => ../azure-model-provider
+replace github.com/HarshDeshmukh26/Providers/enterprise/azure-model-provider => ../azure-model-provider

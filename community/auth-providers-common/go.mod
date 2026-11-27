@@ -1,4 +1,4 @@
-module github.com/obot-platform/providers/auth-providers-common
+module github.com/HarshDeshmukh26/Providers/community/auth-providers-common
 
 go 1.27
 

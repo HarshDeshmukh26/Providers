@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/modelcontextprotocol/go-sdk/auth"
-	componenthttp "github.com/obot-platform/mmmcp/component/http"
-	"github.com/obot-platform/mmmcp/config"
+	componenthttp "github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component/http"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 	"golang.org/x/oauth2"
 )
 

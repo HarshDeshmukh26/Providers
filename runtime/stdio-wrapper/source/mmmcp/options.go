@@ -5,8 +5,8 @@ import (
 	nethttp "net/http"
 	"time"
 
-	"github.com/obot-platform/mmmcp/component/http"
-	"github.com/obot-platform/mmmcp/storage"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component/http"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/storage"
 )
 
 // Options configures the composite runtime.

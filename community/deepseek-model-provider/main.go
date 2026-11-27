@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/obot-platform/providers/openai-model-provider/proxy"
+	"github.com/HarshDeshmukh26/Providers/community/openai-model-provider/proxy"
 )
 
 func main() {

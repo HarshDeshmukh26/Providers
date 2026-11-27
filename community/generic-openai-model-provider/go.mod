@@ -1,9 +1,9 @@
-module github.com/obot-platform/providers/generic-openai-model-provider
+module github.com/HarshDeshmukh26/Providers/community/generic-openai-model-provider
 
 go 1.27
 
-replace github.com/obot-platform/providers/openai-model-provider => ../openai-model-provider
+replace github.com/HarshDeshmukh26/Providers/community/openai-model-provider => ../openai-model-provider
 
-require github.com/obot-platform/providers/openai-model-provider v0.0.0
+require github.com/HarshDeshmukh26/Providers/community/openai-model-provider v0.0.0
 
-replace github.com/obot-platform/chat-completion-client => ../../third_party/go/chat-completion-client
+replace github.com/HarshDeshmukh26/Providers/third_party/go/chat-completion-client => ../../third_party/go/chat-completion-client

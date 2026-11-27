@@ -1,10 +1,10 @@
-module github.com/obot-platform/enterprise-providers/entra-auth-provider
+module github.com/HarshDeshmukh26/Providers/enterprise/entra-auth-provider
 
 go 1.26.4
 
 replace (
 	github.com/oauth2-proxy/oauth2-proxy/v7 => ../../third_party/go/oauth2-proxy
-	github.com/obot-platform/enterprise-providers/authcommon => ../authcommon
+	github.com/HarshDeshmukh26/Providers/enterprise/authcommon => ../authcommon
 )
 
 require (
@@ -14,8 +14,8 @@ require (
 	github.com/microsoftgraph/msgraph-sdk-go v1.79.0
 	github.com/microsoftgraph/msgraph-sdk-go-core v1.3.2
 	github.com/oauth2-proxy/oauth2-proxy/v7 v7.8.1
-	github.com/obot-platform/enterprise-providers/authcommon v0.0.0
-	github.com/obot-platform/providers/auth-providers-common v0.0.0-20260717172559-9ab827189ee6
+	github.com/HarshDeshmukh26/Providers/enterprise/authcommon v0.0.0
+	github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common v0.0.0-20260717172559-9ab827189ee6
 )
 
 require (
@@ -106,4 +106,4 @@ require (
 	k8s.io/apimachinery v0.35.3 // indirect
 )
 
-replace github.com/obot-platform/providers/auth-providers-common => ../../third_party/go/auth-providers-common
+replace github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common => ../../third_party/go/auth-providers-common

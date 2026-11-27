@@ -6,9 +6,9 @@ import (
 	"sync"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/obot-platform/mmmcp/component"
-	"github.com/obot-platform/mmmcp/config"
-	"github.com/obot-platform/mmmcp/namespace"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/namespace"
 	"github.com/yosida95/uritemplate/v3"
 )
 

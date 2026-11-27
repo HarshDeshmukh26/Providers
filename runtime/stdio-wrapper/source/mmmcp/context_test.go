@@ -3,7 +3,7 @@ package mmmcp
 import (
 	"testing"
 
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 )
 
 func TestContextConfigIsExactReplacement(t *testing.T) {
