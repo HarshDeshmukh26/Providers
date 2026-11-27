@@ -1,7 +1,7 @@
 package mmmcp
 
 import (
-	"github.com/obot-platform/mmmcp/component"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component"
 )
 
 // AuthorizationError reports an authorization challenge returned by an HTTP

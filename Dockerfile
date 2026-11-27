@@ -3,7 +3,7 @@ ARG BUILD_IMAGE=cgr.dev/chainguard/wolfi-base
 FROM --platform=$BUILDPLATFORM ${BUILD_IMAGE} AS base
 RUN apk add --no-cache bash go-1.27 make git ca-certificates upx
 ENV GOPROXY=https://proxy.golang.org \
-    GONOPROXY=github.com/obot-platform \
+    GONOPROXY=github.com/obot-platform,github.com/HarshDeshmukh26 \
     GOVCS=*:off
 COPY sources.lock.env /sources.lock.env
 COPY --chmod=0755 scripts/package.sh /usr/local/bin/package-fragai-providers

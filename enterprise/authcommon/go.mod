@@ -1,10 +1,10 @@
-module github.com/obot-platform/enterprise-providers/authcommon
+module github.com/HarshDeshmukh26/Providers/enterprise/authcommon
 
 go 1.26.4
 
 replace github.com/oauth2-proxy/oauth2-proxy/v7 => ../../third_party/go/oauth2-proxy
 
-require github.com/obot-platform/providers/auth-providers-common v0.0.0-20260717172559-9ab827189ee6
+require github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common v0.0.0-20260717172559-9ab827189ee6
 
 require (
 	cloud.google.com/go/auth v0.18.2 // indirect
@@ -80,4 +80,4 @@ require (
 	k8s.io/apimachinery v0.35.3 // indirect
 )
 
-replace github.com/obot-platform/providers/auth-providers-common => ../../third_party/go/auth-providers-common
+replace github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common => ../../third_party/go/auth-providers-common

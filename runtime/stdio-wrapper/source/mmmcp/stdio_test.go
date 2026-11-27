@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/obot-platform/mmmcp/config"
-	"github.com/obot-platform/mmmcp/storage"
-	"github.com/obot-platform/mmmcp/testserver"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/storage"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/testserver"
 )
 
 func TestRunPersistentUsesProcessScopedContextConfig(t *testing.T) {

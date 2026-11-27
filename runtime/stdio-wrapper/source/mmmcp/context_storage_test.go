@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/obot-platform/mmmcp"
-	"github.com/obot-platform/mmmcp/config"
-	"github.com/obot-platform/mmmcp/storage"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/storage"
 )
 
 func TestEmptyContextDSNSelectsSQLiteInsteadOfDefaultDSN(t *testing.T) {

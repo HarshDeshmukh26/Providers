@@ -11,9 +11,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/obot-platform/enterprise-providers/authcommon"
-	"github.com/obot-platform/enterprise-providers/jumpcloud-auth-provider/pkg/client"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
+	"github.com/HarshDeshmukh26/Providers/enterprise/authcommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/jumpcloud-auth-provider/pkg/client"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 )
 
 const (

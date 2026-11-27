@@ -1,7 +1,7 @@
 package catalog
 
 import (
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 	"github.com/yosida95/uritemplate/v3"
 )
 

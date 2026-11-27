@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 )
 
 // PageRequest is one page of a group listing, as asked for by Obot. The cursor has already been

@@ -1,4 +1,4 @@
-module github.com/obot-platform/enterprise-providers/amazon-bedrock-model-provider
+module github.com/HarshDeshmukh26/Providers/enterprise/amazon-bedrock-model-provider
 
 go 1.26.4
 

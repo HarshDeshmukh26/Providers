@@ -6,8 +6,8 @@ import (
 	"net/http/httputil"
 	"os"
 
-	aproxy "github.com/obot-platform/providers/anthropic-model-provider/proxy"
-	"github.com/obot-platform/providers/openai-model-provider/proxy"
+	aproxy "github.com/HarshDeshmukh26/Providers/community/anthropic-model-provider/proxy"
+	"github.com/HarshDeshmukh26/Providers/community/openai-model-provider/proxy"
 )
 
 func main() {

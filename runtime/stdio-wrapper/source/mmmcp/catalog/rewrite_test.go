@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/obot-platform/mmmcp/catalog"
-	"github.com/obot-platform/mmmcp/component"
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/catalog"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 )
 
 func TestRewriteClonesTypedResourceFieldsWithoutTraversingStructuredJSON(t *testing.T) {

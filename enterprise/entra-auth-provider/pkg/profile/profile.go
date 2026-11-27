@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/HarshDeshmukh26/Providers/enterprise/authcommon"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 	"github.com/hashicorp/golang-lru/v2/expirable"
 	msgraphsdkgo "github.com/microsoftgraph/msgraph-sdk-go"
 	msgraphcore "github.com/microsoftgraph/msgraph-sdk-go-core"
@@ -19,8 +21,6 @@ import (
 	"github.com/microsoftgraph/msgraph-sdk-go/models"
 	"github.com/microsoftgraph/msgraph-sdk-go/models/odataerrors"
 	"github.com/microsoftgraph/msgraph-sdk-go/users"
-	"github.com/obot-platform/enterprise-providers/authcommon"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
 )
 
 const (

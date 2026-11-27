@@ -3,7 +3,7 @@ package mmmcp
 import (
 	"context"
 
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 )
 
 type configContextKey struct{}

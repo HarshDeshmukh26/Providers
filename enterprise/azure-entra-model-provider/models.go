@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/obot-platform/enterprise-providers/azure-model-provider/azurecommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/azure-model-provider/azurecommon"
 )
 
 type managementDeploymentsResponse struct {

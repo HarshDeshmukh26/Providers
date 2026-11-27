@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/obot-platform/enterprise-providers/azure-model-provider/azurecommon"
+	"github.com/HarshDeshmukh26/Providers/enterprise/azure-model-provider/azurecommon"
 )
 
 // validUsageTypes is the set of recognized usage type values.

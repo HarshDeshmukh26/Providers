@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common/pkg/state"
 )
 
 func TestParseGroupPageRequest(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	componenthttp "github.com/obot-platform/mmmcp/component/http"
+	componenthttp "github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component/http"
 	"golang.org/x/oauth2"
 )
 

@@ -12,12 +12,12 @@ import (
 	"strings"
 	"time"
 
+	"github.com/HarshDeshmukh26/Providers/community/auth-providers-common/pkg/env"
+	"github.com/HarshDeshmukh26/Providers/community/auth-providers-common/pkg/state"
+	"github.com/HarshDeshmukh26/Providers/community/google-auth-provider/pkg/profile"
 	oauth2proxy "github.com/oauth2-proxy/oauth2-proxy/v7"
 	"github.com/oauth2-proxy/oauth2-proxy/v7/pkg/apis/options"
 	"github.com/oauth2-proxy/oauth2-proxy/v7/pkg/validation"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/env"
-	"github.com/obot-platform/providers/auth-providers-common/pkg/state"
-	"github.com/obot-platform/providers/google-auth-provider/pkg/profile"
 )
 
 type Options struct {

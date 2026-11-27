@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/obot-platform/mmmcp/component"
-	"github.com/obot-platform/mmmcp/config"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/component"
+	"github.com/HarshDeshmukh26/Providers/runtime/stdio-wrapper/source/mmmcp/config"
 )
 
 const (

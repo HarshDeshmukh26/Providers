@@ -11,7 +11,9 @@
       "directory": "third_party/go/chat-completion-client",
       "license": "Apache-2.0",
       "fileCount": 15,
-      "treeSha256": "c1fd438f4edc73454b6b67f8ed211ca5f427f3fcdb792d6f6c60d2f766435a22"
+      "treeSha256": "c1fd438f4edc73454b6b67f8ed211ca5f427f3fcdb792d6f6c60d2f766435a22",
+      "localModule": "github.com/HarshDeshmukh26/Providers/third_party/go/chat-completion-client",
+      "localTreeSha256": "7a0a0f1f4d7d31f734128ad84ede63aec03509d5ed0b91c231e9544881955c89"
     },
     {
       "module": "github.com/obot-platform/providers/auth-providers-common",
@@ -24,7 +26,9 @@
       "directory": "third_party/go/auth-providers-common",
       "license": "Apache-2.0",
       "fileCount": 7,
-      "treeSha256": "b9e31694e0192bb31edc22b2e650f5f610c62c39b95027f4f0e6ce925fec7299"
+      "treeSha256": "b9e31694e0192bb31edc22b2e650f5f610c62c39b95027f4f0e6ce925fec7299",
+      "localModule": "github.com/HarshDeshmukh26/Providers/third_party/go/auth-providers-common",
+      "localTreeSha256": "721016fe3a5ae2c11549a53bed5f3fe6963aedfd34fdfc1cf8b6328708874f24"
     },
     {
       "module": "github.com/obot-platform/providers/openai-model-provider",
@@ -37,7 +41,9 @@
       "directory": "third_party/go/openai-model-provider",
       "license": "Apache-2.0",
       "fileCount": 10,
-      "treeSha256": "ad64843b3fea969b5814305d1d110731779d1ac89c3028c1f90947830c451b99"
+      "treeSha256": "ad64843b3fea969b5814305d1d110731779d1ac89c3028c1f90947830c451b99",
+      "localModule": "github.com/HarshDeshmukh26/Providers/third_party/go/openai-model-provider",
+      "localTreeSha256": "7dbd15623a3f278869e80bd148d0cfbccc7dd28b94716f70062da59deca1f352"
     },
     {
       "module": "github.com/obot-platform/oauth2-proxy/v7",

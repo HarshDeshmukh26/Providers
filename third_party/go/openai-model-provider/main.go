@@ -6,8 +6,8 @@ import (
 	"net/http/httputil"
 	"os"
 
-	"github.com/obot-platform/providers/openai-model-provider/openaiproxy"
-	"github.com/obot-platform/providers/openai-model-provider/proxy"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/openai-model-provider/openaiproxy"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/openai-model-provider/proxy"
 )
 
 func main() {

@@ -27,6 +27,16 @@ for (const snapshot of lock.modules) {
   assert.match(snapshot.directory, /^third_party\/go\/[a-z0-9-]+$/);
   assert.match(snapshot.revision, /^[a-f0-9]{40}$/);
   assert(snapshot.revision.startsWith(snapshot.version.split("-").at(-1)));
+  if (snapshot.localModule) {
+    const localModule = `github.com/HarshDeshmukh26/Providers/${snapshot.directory}`;
+    assert.equal(snapshot.localModule, localModule);
+    const goMod = fs.readFileSync(
+      path.join(root, snapshot.directory, "go.mod"),
+      "utf8",
+    );
+    assert.equal(goMod.match(/^module (\S+)/m)?.[1], localModule);
+    assert.match(snapshot.localTreeSha256, /^[a-f0-9]{64}$/);
+  }
   const hashes = [];
   function visit(relative = "") {
     const folder = path.join(root, snapshot.directory, relative);
@@ -57,7 +67,7 @@ for (const snapshot of lock.modules) {
     .digest("hex");
   assert.equal(
     hash,
-    snapshot.treeSha256,
+    snapshot.localTreeSha256 ?? snapshot.treeSha256,
     `${snapshot.module}: source snapshot changed`,
   );
   console.log(

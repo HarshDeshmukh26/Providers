@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/obot-platform/providers/openai-model-provider/proxy"
+	"github.com/HarshDeshmukh26/Providers/third_party/go/openai-model-provider/proxy"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
